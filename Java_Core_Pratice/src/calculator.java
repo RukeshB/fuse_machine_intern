@@ -1,26 +1,50 @@
-import java.io.IOException;
+
 import java.util.Scanner;
 
 public class calculator {
 
-	public void add(double a, double b)
+	public double add(double[] num)
 	{
-		System.out.println(a + " + " + b +" = "+(a+b));
+		double sum = 0;
+		for(int i=0;i<num.length;i++)
+		{
+			sum += num[i];
+		}
+		return sum;
+		//System.out.println(a + " + " + b +" = "+(a+b));
 	}
 	
-	public void subtract(double a, double b)
+	public double subtract(double[] num)
 	{
-		System.out.println(a + " - " + b +" = "+(a-b));
+		double sub = 0;
+		for(int i=0;i<num.length;i++)
+		{
+			sub -= num[i];
+		}
+		return sub;
+		//System.out.println(a + " - " + b +" = "+(a-b));
 	}
 	
-	public void Divide(double a, double b)
+	public double Divide(double[] num)
 	{
-		System.out.println(a + " / " + b +" = "+(a/b));
+		double div = num[0];
+		for(int i=1;i<num.length;i++)
+		{
+			div = div/num[i];
+		}
+		return div;
+		//System.out.println(a + " / " + b +" = "+(a/b));
 	}
 	
-	public void Multiply(double a, double b)
+	public double Multiply(double[] num)
 	{
-		System.out.println(a + " * " + b +" = "+(a*b));
+		double mul = 1;
+		for(int i=0;i<num.length;i++)
+		{
+			mul *= num[i];
+		}
+		return mul;
+		//System.out.println(a + " * " + b +" = "+(a*b));
 	}
 	
 	public static void clearScreen() {  
@@ -41,36 +65,44 @@ public class calculator {
 			
 			int option = input.nextInt();
 			
-			double a=0,b=0;
-			if(option != 5)
+			double[] num;
+			num= new double[0];
+			int n=0;
+			double result=0;
+			if(option == 1 || option == 2 || option == 3 || option == 4)
 			{
-				System.out.print("Enter First Number: ");
-				a= input.nextDouble();
+				System.out.print("Enter How many Number: ");
+				n= input.nextInt();
 				
-				System.out.print("Enter second Number: ");
-				b= input.nextDouble();
+				num= new double[n];
+				for(int i=0;i<n;i++)
+				{
+					System.out.print("Enter Number["+(i+1)+"]: ");
+					num[i]= input.nextDouble();
+				}
+				
 			}
 			
 			switch(option)
 			{
 				case 1:
 				{
-					cal.add(a,b);
+					result = cal.add(num);
 					break;
 				}
 				case 2:
 				{
-					cal.subtract(a, b);
+					result=cal.subtract(num);
 					break;
 				}
 				case 3:
 				{
-					cal.Multiply(a, b);
+					result=cal.Multiply(num);
 					break;
 				}
 				case 4:
 				{
-					cal.Divide(a, b);
+					result=cal.Divide(num);
 					break;
 				}
 				case 5:
@@ -82,6 +114,11 @@ public class calculator {
 				{
 					System.out.println("Enter Valid Option !!!");
 				}
+			}
+			
+			if(option == 1 || option == 2 || option == 3 || option == 4)
+			{
+				System.out.println("Result = "+ result);
 			}
 			clearScreen();
 		}
