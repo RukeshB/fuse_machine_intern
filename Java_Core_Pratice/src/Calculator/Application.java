@@ -77,6 +77,7 @@ public class Application {
 				System.out.println("Result = "+ result);
 			}
 			clearScreen();
+			input.close();
 		}
 		
 	}

@@ -19,6 +19,7 @@ public class Getting_Input {
 		System.out.println("Name: "+ name);
 		System.out.println("age: "+ age);
 		System.out.println("salary: "+ salary);
+		sc.close();
 	}
 
 }
