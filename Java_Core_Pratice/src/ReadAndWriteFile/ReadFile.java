@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Main {
+public class ReadFile {
 
 	public static void main(String[] args) {
 		File file = new File("test.txt");
@@ -35,6 +35,8 @@ public class Main {
 				bufferReader.close();
 			} catch (IOException e) {
 				System.out.println("Unable to Close a File : "+ file.toString());
+			}catch(NullPointerException e) {
+				
 			}
 		}
 	}
