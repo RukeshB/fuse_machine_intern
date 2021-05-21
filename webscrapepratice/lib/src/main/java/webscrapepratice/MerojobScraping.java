@@ -15,6 +15,7 @@ public class MerojobScraping {
 			for(Element element : doc.select("div.job-card"))
 			{
 				String alldetail = element.select("h2.h6.mb-1").text();
+				String link = element.select("h2.h6.mb-1 a[href]").attr("href");
 				
 				if(alldetail != "")
 				{
@@ -34,7 +35,7 @@ public class MerojobScraping {
 						index++;
 						//System.out.print(detail + "\t");
 					}
-					System.out.println(company + " => " + job);
+					System.out.println(company + " => " + job +" => " + url+link);
 					//System.out.print("\n");
 				}
 				
