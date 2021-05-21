@@ -3,25 +3,41 @@ package webscrapepratice;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 public class MerojobScraping {
 
 	public static void main(String[] args) {
-		final String url = "https://merojob.com/";
+		final String url = "https://merojob.com";
 		
 		try
 		{
 			Document doc = Jsoup.connect(url).get();
-			for(Element job : doc.select("div.job-card"))
+			for(Element element : doc.select("div.job-card"))
 			{
-				String alldetaial = job.select("h2.h6.mb-1").text();
-				String[] details = alldetaial.split(" • ");
-				for(String detail: details)
+				String alldetail = element.select("h2.h6.mb-1").text();
+				
+				if(alldetail != "")
 				{
-					System.out.print(detail + "\t");
+					String[] details = alldetail.split(" • ");
+					String company="";
+					String job="";
+					int index=0;
+					for(String detail: details)
+					{
+						if(index==0)
+						company = detail;
+						
+						if(job != "")
+						job = job + ", "+ detail;
+						
+						job = detail;
+						index++;
+						//System.out.print(detail + "\t");
+					}
+					System.out.println(company + " => " + job);
+					//System.out.print("\n");
 				}
-				System.out.print("\n");
+				
 			}
 			System.out.println("sucessful");
 		}
