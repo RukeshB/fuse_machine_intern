@@ -70,11 +70,18 @@ public class MerojobScraping {
 			System.out.println("description => "+description);
 			System.out.println("jobTitle => "+jobTitle);
 			
-			System.out.println("Information : ");
-			for(Element element: elements.select("table.table.table-hover.table-no-border.m-0 tbody tr"))
+			System.out.println("");
+			for(Element element : elements.select("div.card-body div.card-group"))
 			{
-				String information = element.text();
-				System.out.println(information);
+				String header = element.select("div.card-header.p-2 h3.mb-1.h6 strong").text();
+				System.out.println(header);
+				
+				for(Element subelement: element.select("table.table.table-hover.table-no-border.m-0 tbody tr"))
+				{
+					String information = subelement.text();
+					System.out.println(information);
+				}
+				System.out.println("");
 			}
 			
 			System.out.print("\n\n");
