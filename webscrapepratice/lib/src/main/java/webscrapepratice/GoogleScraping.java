@@ -5,7 +5,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class Main {
+public class GoogleScraping {
 
 	public static void main(String[] args) {
 		final String url = "https://www.google.com/";
