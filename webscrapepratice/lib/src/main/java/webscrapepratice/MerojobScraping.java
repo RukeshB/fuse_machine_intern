@@ -9,7 +9,6 @@ public class MerojobScraping {
 
 	public static void main(String[] args) {
 		final String url = "https://merojob.com";
-		
 		try
 		{
 			Document doc = Jsoup.connect(url).get();
