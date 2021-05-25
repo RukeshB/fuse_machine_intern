@@ -10,7 +10,7 @@ import org.jsoup.select.Elements;
 
 public class MerojobScraping {
 
-	public static ArrayList<String> jobs = new ArrayList<String>();
+	public static ArrayList<String> jobs ;
 	public static HashMap<Integer, ArrayList<String>> jobdetails = new HashMap<Integer, ArrayList<String>>();
 	
 	public static void main(String[] args) {
@@ -22,6 +22,7 @@ public class MerojobScraping {
 			String link= "";
 			for(Element element : doc.select("div.job-card"))
 			{
+				jobs = new ArrayList<String>();
 				String alldetail = element.select("h2.h6.mb-1").text();
 				link = element.select("h2.h6.mb-1 a[href]").attr("href");
 				
@@ -48,11 +49,10 @@ public class MerojobScraping {
 					final String indjoblink = url+link;
 					jobnumber++;
 					JobDetail(indjoblink,jobnumber);
-					jobs.clear();
 				}
 				
 			}
-			System.out.println(jobdetails);
+			
 			System.out.println("sucessful");
 		}
 		catch(Exception ex)
@@ -103,7 +103,7 @@ public class MerojobScraping {
 			
 			System.out.println(jobs);
 			jobdetails.put(jobnumber, jobs);
-			
+			System.out.println(jobdetails);
 			System.out.print("\n\n");
 			
 			
