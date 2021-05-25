@@ -10,11 +10,20 @@ import org.jsoup.select.Elements;
 
 public class MerojobScraping {
 
-	public static ArrayList<String> jobs ;
-	public static HashMap<Integer, ArrayList<String>> jobdetails = new HashMap<Integer, ArrayList<String>>();
-	
-	public static void main(String[] args) {
+	private ArrayList<String> jobs = new ArrayList<String>() ;
+	private HashMap<Integer, ArrayList<String>> jobdetails = new HashMap<Integer, ArrayList<String>>();
+
+	public HashMap<Integer, ArrayList<String>> getJobdetails() {
+		return jobdetails;
+	}
+
+	public void setJobdetails(HashMap<Integer, ArrayList<String>> jobdetails) {
+		this.jobdetails = jobdetails;
+	}
+
+	public void Scrap() {
 		int jobnumber = 0;
+		HashMap<Integer, ArrayList<String>> alldata = new HashMap<Integer, ArrayList<String>>();
 		final String url = "https://merojob.com";
 		try
 		{
@@ -23,36 +32,19 @@ public class MerojobScraping {
 			for(Element element : doc.select("div.job-card"))
 			{
 				jobs = new ArrayList<String>();
-				String alldetail = element.select("h2.h6.mb-1").text();
 				link = element.select("h2.h6.mb-1 a[href]").attr("href");
 				
-				if(alldetail != "")
+				if(link != "")
 				{
-					String[] details = alldetail.split(" • ");
-					String company="";
-					String job="";
-					int index=0;
-					for(String detail: details)
-					{
-						if(index==0)
-						company = detail;
-						
-						if(job != "")
-						job = job + ", "+ detail;
-						
-						job = detail;
-						index++;
-						//System.out.print(detail + "\t");
-					}
-					
 					//getting detail of job 
 					final String indjoblink = url+link;
 					jobnumber++;
 					JobDetail(indjoblink,jobnumber);
+					alldata.put(jobnumber, jobs);
 				}
-				
 			}
-			
+			setJobdetails(alldata);
+			//System.out.println(getJobdetails());
 			System.out.println("sucessful");
 		}
 		catch(Exception ex)
@@ -61,7 +53,7 @@ public class MerojobScraping {
 		}
 	}
 	
-	public static void JobDetail(String link,int jobnumber)
+	public void JobDetail(String link,int jobnumber)
 	{
 		
 		try
@@ -76,37 +68,23 @@ public class MerojobScraping {
 			jobs.add(link);
 			jobs.add(companyName);
 			jobs.add(jobCatagory);
-			//jobs.add(description);
+			jobs.add(description);
 			jobs.add(jobTitle);
-			//System.out.println("company Name => "+companyName);
-			//System.out.println("job Catagory => "+jobCatagory);
-			//System.out.println("description => "+description);
-			//System.out.println("jobTitle => "+jobTitle);
 			
-			//System.out.println("");
 			for(Element element : elements.select("div.card-body div.card-group"))
 			{
-				String header = element.select("div.card-header.p-2 h3.mb-1.h6 strong").text();
-				//System.out.println(header);
-				
+			
 				for(Element subelement: element.select("table.table.table-hover.table-no-border.m-0 tbody tr"))
 				{
 					String information = subelement.text();
 					
 					String[] details = information.split(" : ");
 					jobs.add(details[1]);
-					
-					//System.out.println(information);
 				}
-				//System.out.println("");
-			}
-			
-			System.out.println(jobs);
-			jobdetails.put(jobnumber, jobs);
-			System.out.println(jobdetails);
-			System.out.print("\n\n");
-			
-			
+			}			
+			//System.out.println(jobs);
+			//System.out.println(jobdetails);
+			//System.out.print("\n\n");
 		}
 		catch(Exception ex)
 		{
