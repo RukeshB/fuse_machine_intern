@@ -32,6 +32,7 @@ public class MerojobScraping {
 			for(Element element : doc.select("div.job-card"))
 			{
 				jobs = new ArrayList<String>();
+				//get job link from merojob.com
 				link = element.select("h2.h6.mb-1 a[href]").attr("href");
 				
 				if(link != "")
@@ -43,6 +44,8 @@ public class MerojobScraping {
 					alldata.put(jobnumber, jobs);
 				}
 			}
+			
+			//setting job detail to a veriable
 			setJobdetails(alldata);
 			//System.out.println(getJobdetails());
 			System.out.println("sucessful");

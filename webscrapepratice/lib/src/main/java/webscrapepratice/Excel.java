@@ -19,8 +19,11 @@ public class Excel {
 
 	public void Write(HashMap<Integer, ArrayList<String>> details, String[] title) throws IOException {
 	try (HSSFWorkbook workbook = new HSSFWorkbook()) {
+		
+		//creating new sheet
 		HSSFSheet spreadsheet = workbook.createSheet("job");
 		
+		//creating row
 		HSSFRow row;
 		
 		//Adding header to first place in hashmap details
@@ -31,6 +34,7 @@ public class Excel {
 		details.put(0, header);
 		details.putAll(temp);
 		
+		//getting all key of hashmap details
 		Set<Integer> keyid = details.keySet();
 		  
 		int rowid = 0;

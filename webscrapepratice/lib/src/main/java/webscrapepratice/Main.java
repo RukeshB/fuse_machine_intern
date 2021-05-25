@@ -9,10 +9,15 @@ public class Main {
 				"Job Category","Job Level","No. of Vacancy/s","Employment Type","Job Location",
 				"Offered Salary","Apply Before(Deadline)","Education Level","Experience Required",
 				"Professional Skill Required"};
+		
+		//scraping merojob website
 		MerojobScraping meroJob = new MerojobScraping();
 		meroJob.Scrap();
+		
+		//exporting scraped data to excel
 		Excel writeToExcel = new Excel();
 		writeToExcel.Write(meroJob.getJobdetails(),title);
+		
 		System.out.println(meroJob.getJobdetails());
 	}
 
