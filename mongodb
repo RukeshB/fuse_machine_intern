@@ -1,0 +1,65 @@
+
+-> mongo 		=> enetr mongo shell
+
+-> show dbs 		=> show all db
+-> use database_name 	=> create and use database
+-> db			=> show current db we are working on 
+
+-> Creates a new user for the database 
+db.createUser({
+	user_name:"jhon",
+	email:"jhon@gmail.com"
+	role:["admin","user"]
+});
+
+//collection
+-> db.createCollection('collection_name')		=> create a collection
+-> show collections					=> show all collection
+-> db.collection_name.insert({key:"value"});		=> insert documents in collection
+-> db.collection_name.find(condition);			=> list all the documents in collection
+-> db.collection_name.find().pretty();
+-> db.collection_name.find().sort({fild_name:1/-1})	=> sort and list a data(1 for asc and -1 for dis)
+-> db.collection_name.update
+	(
+	{condition},			//condition to find and update a document
+	{
+	update parameter
+	},			
+	{upsert: true}			//insert a new document if condition don't match 	
+	)
+
+-> db.collection_name.remove		//remove a document
+	(
+	{condition}	//condition to find a document
+	)
+
+-> update parameters
+	{key:"value"}			//replace data
+	$set:{key:"value"}		//add a new value to a document
+	$inc:{key:increment value}	//increment the value
+	$unset:{key:1}			//remove a data from a document	
+	$rename:{"currentkey":"newkey"}	//rename the key of the data
+		
+-> conditions
+	{key:"value"}				//find a document which have key = value given 
+	{$or:[{key:"value"},{key:"value"}]}	//or condition
+	{key:{$gt:value}}			//greater then a value
+	{key:{$lt:value}}			//less then a value
+	{key:{$gte:value}}			//greater then equal to
+	{key:{$lte:value}}			//less then equal to
+
+-> Types of value in mongo db
+eg:
+{
+	first_name : "john",
+	last_name : "Doe",
+	memberships : ["mem1","mem2"],
+	address:{
+		street:"4 main st",
+		city:"Boston"
+	}	
+	contacts:[
+		{name:"Brad", relationship:"friend"},
+		{name:"jhon", relationship:"friend"}
+	]
+}
