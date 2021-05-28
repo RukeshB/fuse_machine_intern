@@ -2,7 +2,7 @@
 -> mongo 		=> enetr mongo shell
 
 -> show dbs 		=> show all db
--> use database_name 	=> create and use database
+-> use database_name 	=> use database and create database if don't exist 
 -> db			=> show current db we are working on 
 
 -> Creates a new user for the database 
@@ -15,7 +15,8 @@ db.createUser({
 //collection
 -> db.createCollection('collection_name')		=> create a collection
 -> show collections					=> show all collection
--> db.collection_name.insert({key:"value"});		=> insert documents in collection
+-> db.collection_name.insert({key:"value"});		=> insert documents in collection and 
+							   if collection don't exit it will create collection too
 -> db.collection_name.find(condition);			=> list all the documents in collection
 -> db.collection_name.find().pretty();
 -> db.collection_name.find().sort({fild_name:1/-1})	=> sort and list a data(1 for asc and -1 for dis)
@@ -42,7 +43,8 @@ db.createUser({
 		
 -> conditions
 	{key:"value"}				//find a document which have key = value given 
-	{$or:[{key:"value"},{key:"value"}]}	//or condition
+	{$or:[{condition},{condition}]}		//or operation
+	{conditon,condition}			//and operation
 	{key:{$gt:value}}			//greater then a value
 	{key:{$lt:value}}			//less then a value
 	{key:{$gte:value}}			//greater then equal to
