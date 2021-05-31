@@ -1,5 +1,7 @@
 package io.springboot.pratice.service;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,7 +13,7 @@ import io.springboot.pratice.entity.StudentEntity;
 public class StudentService {
 
 
-	private List<StudentEntity> studentList = Arrays.asList(
+	private List<StudentEntity> studentList = new ArrayList<>( Arrays.asList(
 			new StudentEntity(1011,"Ram","Duwal","male",11,10),
 			new StudentEntity(1005,"Shyam","Duwal","male",5,10),
 			new StudentEntity(1001,"Sita","Suwal","female",1,10),
@@ -19,7 +21,7 @@ public class StudentService {
 			new StudentEntity(907,"Hari","karki","male",7,9),
 			new StudentEntity(1002,"jhon","shimt","male",2,10),
 			new StudentEntity(1004,"jack","jhonshon","male",4,10)
-			);
+			));
 	
 	public List<StudentEntity> getAllStudent()
 	{
@@ -29,5 +31,10 @@ public class StudentService {
 	public StudentEntity getStudentById(int id)
 	{
 		return studentList.stream().filter(x-> x.getId()==id).findFirst().get();
+	}
+	
+	public void addStudent(StudentEntity student)
+	{
+		studentList.add(student);
 	}
 }
