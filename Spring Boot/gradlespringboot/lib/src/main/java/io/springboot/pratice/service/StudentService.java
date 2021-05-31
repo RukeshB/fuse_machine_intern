@@ -1,6 +1,5 @@
 package io.springboot.pratice.service;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,10 +44,17 @@ public class StudentService {
 			if(studentList.get(i).getId() == id)
 			{
 				studentList.set(i, student);
-//				studentList.set(studentList.indexOf(id), student);
-//				datail.setFirstName(student.getFirstName());
-//				datail.setLastName(student.getLastName());
-//				datail.setGender(student.getGender());
+			}
+		}
+	}
+	
+	public void deleteStudent(int id)
+	{
+		for(int i=0;i<studentList.size();i++)
+		{
+			if(studentList.get(i).getId() == id)
+			{
+				studentList.remove(i);
 			}
 		}
 	}
