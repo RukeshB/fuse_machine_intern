@@ -34,4 +34,10 @@ public class StudentController {
 	{
 		studentService.addStudent(student);
 	}
+	
+	@RequestMapping(method=RequestMethod.PUT, value = "/student/{id}")
+	public void updateStudent(@RequestBody StudentEntity student,@PathVariable int id)
+	{
+		studentService.updateStudent(id, student);
+	}
 }

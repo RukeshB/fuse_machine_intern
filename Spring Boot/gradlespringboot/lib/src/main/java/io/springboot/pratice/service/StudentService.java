@@ -37,4 +37,19 @@ public class StudentService {
 	{
 		studentList.add(student);
 	}
+	
+	public void updateStudent(int id,StudentEntity student)
+	{
+		for(int i=0;i<studentList.size();i++)
+		{
+			if(studentList.get(i).getId() == id)
+			{
+				studentList.set(i, student);
+//				studentList.set(studentList.indexOf(id), student);
+//				datail.setFirstName(student.getFirstName());
+//				datail.setLastName(student.getLastName());
+//				datail.setGender(student.getGender());
+			}
+		}
+	}
 }
