@@ -1,6 +1,7 @@
 package io.springboot.pratice.entity;
 
 public class StudentEntity {
+ private int id;
  private String firstName;
  private String lastName;
  private String gender;
@@ -12,13 +13,22 @@ public class StudentEntity {
 	 
  }
  
-public StudentEntity(String firstName, String lastName, String gender, int rollNo, int classNo) {
+public StudentEntity(int id,String firstName, String lastName, String gender, int rollNo, int classNo) {
 	super();
+	this.id = id;
 	this.firstName = firstName;
 	this.lastName = lastName;
 	this.gender = gender;
 	this.rollNo = rollNo;
 	this.classNo = classNo;
+}
+
+public int getId() {
+	return id;
+}
+
+public void setId(int id) {
+	this.id = id;
 }
 
 public String getFirstName() {
