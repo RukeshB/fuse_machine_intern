@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.springboot.pratice.entity.Teachers;
@@ -19,10 +20,18 @@ public class TeacherController {
 	TeacherService teacherService;
 	
 	@RequestMapping("/teachers")
+	public List<Teachers> getTeachersBySubject(@RequestParam String subject)
+	{
+		return teacherService.getTeacherBySubject(subject);
+	}
+	
+	@RequestMapping("/teachers")
 	public List<Teachers> teacherList()
 	{
 		return teacherService.teacherList();
 	}
+	
+	
 	
 	@RequestMapping("/teachers/{id}")
 	public Teachers getTeacherById(@PathVariable int id)

@@ -10,4 +10,5 @@ public interface TeacherService {
 	public void addTeachers(Teachers teacher);
 	public void updateteachers(int id, Teachers teachers);
 	public void deleteTeachers(int id);
+	public List<Teachers> getTeacherBySubject(String subject);
 }
