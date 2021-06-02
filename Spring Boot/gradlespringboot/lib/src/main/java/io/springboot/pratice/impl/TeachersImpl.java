@@ -60,26 +60,30 @@ public class TeachersImpl implements TeacherService{
 
 	@Override
 	public List<Teachers> getTeacherBySubject(String subject) {
-		int subjectFlag;
-		subjectTeacher = new ArrayList<>(Arrays.asList());
-		
-		for(int i=0;i<teachersData.size();i++)
-		{	
-			subjectFlag = 0;
-			String[] sub = teachersData.get(i).getSubjects();
-			for(int j=0;j<sub.length;j++)
-			{
-				if(sub[j].equals(subject))
+		if(subject != null)
+		{
+			int subjectFlag;
+			subjectTeacher = new ArrayList<>(Arrays.asList());
+			
+			for(int i=0;i<teachersData.size();i++)
+			{	
+				subjectFlag = 0;
+				String[] sub = teachersData.get(i).getSubjects();
+				for(int j=0;j<sub.length;j++)
 				{
-					subjectFlag=1;
+					if(sub[j].equals(subject))
+					{
+						subjectFlag=1;
+					}
+				}
+				if(subjectFlag == 1)
+				{
+					subjectTeacher.add(teachersData.get(i));
 				}
 			}
-			if(subjectFlag == 1)
-			{
-				subjectTeacher.add(teachersData.get(i));
-			}
+			return subjectTeacher;
 		}
-		return subjectTeacher;
+		return teachersData;
 	}
 
 }

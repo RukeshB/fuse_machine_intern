@@ -19,16 +19,24 @@ public class TeacherController {
 	@Autowired
 	TeacherService teacherService;
 	
-	@RequestMapping("/teachers")
-	public List<Teachers> getTeachersBySubject(@RequestParam String subject)
-	{
-		return teacherService.getTeacherBySubject(subject);
-	}
+//	@RequestMapping("/teachers")
+//	public List<Teachers> getTeachersBySubject(@RequestParam String subject)
+//	{
+//		return teacherService.getTeacherBySubject(subject);
+//	}
 	
 	@RequestMapping("/teachers")
-	public List<Teachers> teacherList()
+	public List<Teachers> teacherList(@RequestParam("subject") String subject)
 	{
-		return teacherService.teacherList();
+//		if(subject!=null)
+//		{
+			return teacherService.getTeacherBySubject(subject);
+//		}
+//		else
+//		{
+//			return teacherService.teacherList();
+//		}
+		
 	}
 	
 	
