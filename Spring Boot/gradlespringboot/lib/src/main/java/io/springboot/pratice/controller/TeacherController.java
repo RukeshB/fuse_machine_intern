@@ -2,6 +2,8 @@ package io.springboot.pratice.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,13 +50,13 @@ public class TeacherController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/teachers")
-	public void addTeacher(@RequestBody Teachers teacher)
+	public void addTeacher(@Valid @RequestBody Teachers teacher)
 	{
 		teacherService.addTeachers(teacher);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT, value = "/teachers/{id}")
-	public void updateTeachers(@PathVariable int id,@RequestBody Teachers teacher)
+	public void updateTeachers(@PathVariable int id,@Valid @RequestBody Teachers teacher)
 	{
 		teacherService.updateteachers(id, teacher);
 	}

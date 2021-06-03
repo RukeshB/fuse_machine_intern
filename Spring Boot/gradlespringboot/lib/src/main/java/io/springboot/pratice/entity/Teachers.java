@@ -1,9 +1,19 @@
 package io.springboot.pratice.entity;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class Teachers {
+	
+	@NotNull
 	private int id;
+	@NotNull
+	@Size(min=3, message="First Name Should Contain at least 3 character")
 	private String firstName;
+	@NotNull
+	@Size(min=3, message="Last Name Should Contain at least 3 character")
 	private String lastName;
+	@NotNull
 	private String[] subjects;
 	private String jobType;
 	
