@@ -1,5 +1,11 @@
 package io.springboot.pratice.entity;
 
+import javax.persistence.Entity;
+
+import lombok.Data;
+
+@Data
+@Entity
 public class StudentEntity {
  private int id;
  private String firstName;

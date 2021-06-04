@@ -23,7 +23,9 @@ public class TeacherController {
 
 	@RequestMapping("/teachers")
 	public List<Teachers> teacherList(@RequestParam(required = false) List<String> subject,
-										@RequestParam(required = false) String jobType)
+										@RequestParam(required = false) String jobType,
+										@RequestParam(required = false) String sort
+	)
 	{
 		if(subject != null && jobType == null)
 		{
