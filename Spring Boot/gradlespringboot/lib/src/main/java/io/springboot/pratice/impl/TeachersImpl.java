@@ -2,6 +2,9 @@ package io.springboot.pratice.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +25,31 @@ public class TeachersImpl implements TeacherService{
 			));
 	private List<Teachers> newTeacherDetail;
 	
+	public List<Teachers> sorting(List<Teachers> teacherList,String sortType)
+	{
+		if(sortType != null)
+		{
+			String ascType = "ASC";
+			String descType = "DESC";
+			
+			Comparator<Teachers> compareById = (Teachers o1, Teachers o2) -> o1.getFirstName().compareTo( o2.getFirstName() );
+			
+			if(sortType.toUpperCase().equals(ascType))
+			{	 
+				Collections.sort(teacherList, compareById);
+			}
+			else if(sortType.toUpperCase().equals(descType))
+			{
+				Collections.sort(teacherList, compareById.reversed());
+			}
+		}
+		return teacherList;
+	}
+	
 	@Override
-	public List<Teachers> teacherList() {
-		return teachersData;
+	public List<Teachers> teacherList(String sort) {
+		return sorting(teachersData, sort);
+		//return teachersData;
 	}
 
 	@Override
@@ -60,7 +85,7 @@ public class TeachersImpl implements TeacherService{
 	}
 
 	@Override
-	public List<Teachers> getTeacherBySubjectAndJobType(List<String> subject,String jobType) {
+	public List<Teachers> getTeacherBySubjectAndJobType(List<String> subject,String jobType, String sort) {
 		newTeacherDetail = new ArrayList<>(Arrays.asList());
 			int subjectFlag;
 			for(Teachers teacher: teachersData)
@@ -85,11 +110,12 @@ public class TeachersImpl implements TeacherService{
 					}
 				}
 			}
-		return newTeacherDetail;
+		//return newTeacherDetail;
+		return sorting(newTeacherDetail, sort);
 	}
 
 	@Override
-	public List<Teachers> getTeacherByJobType(String jobType) {
+	public List<Teachers> getTeacherByJobType(String jobType, String sort) {
 		newTeacherDetail = new ArrayList<>(Arrays.asList());
 			for(Teachers teacher:teachersData)
 			{
@@ -98,11 +124,12 @@ public class TeachersImpl implements TeacherService{
 					newTeacherDetail.add(teacher);
 				}
 			}
-			return newTeacherDetail;
+			//return newTeacherDetail;
+			return sorting(newTeacherDetail, sort);
 	}
 
 	@Override
-	public List<Teachers> getTeacherBySubject(List<String> subject) {
+	public List<Teachers> getTeacherBySubject(List<String> subject, String sort) {
 		newTeacherDetail = new ArrayList<>(Arrays.asList());
 		int subjectFlag;
 		for(Teachers teacher: teachersData)
@@ -124,8 +151,8 @@ public class TeachersImpl implements TeacherService{
 				newTeacherDetail.add(teacher);
 			}
 		}
-	return newTeacherDetail;
-
+	//return newTeacherDetail;
+	return sorting(newTeacherDetail, sort);
 	}
 
 }

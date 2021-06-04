@@ -29,17 +29,17 @@ public class TeacherController {
 	{
 		if(subject != null && jobType == null)
 		{
-			return teacherService.getTeacherBySubject(subject);
+			return teacherService.getTeacherBySubject(subject,sort);
 		}
 		else if(subject == null && jobType != null)
 		{
-			return teacherService.getTeacherByJobType(jobType);
+			return teacherService.getTeacherByJobType(jobType,sort);
 		}
 		else if(subject != null && jobType != null)
 		{
-			return teacherService.getTeacherBySubjectAndJobType(subject,jobType);
+			return teacherService.getTeacherBySubjectAndJobType(subject,jobType,sort);
 		}
-			return teacherService.teacherList();
+			return teacherService.teacherList(sort);
 	}
 	
 	

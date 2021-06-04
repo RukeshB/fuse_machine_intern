@@ -3,20 +3,14 @@ package io.springboot.pratice.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.springboot.pratice.entity.StudentEntity;
-import io.springboot.pratice.repository.StudentRepository;
 import io.springboot.pratice.service.StudentService;
 
 @Service
 
 public class StudentImpl implements StudentService{
-	
-	@Autowired
-	StudentRepository studentRepo;
 	
 	private List<StudentEntity> studentList = new ArrayList<>( Arrays.asList(
 			new StudentEntity(1011,"Ram","Duwal","male",11,10),
@@ -31,14 +25,15 @@ public class StudentImpl implements StudentService{
 	@Override
 	public List<StudentEntity> getAllStudent()
 	{
-		return studentRepo.findAll();
+		//return studentRepo.findAll();
+		return studentList;
 	}
 	
 	@Override
 	public StudentEntity getStudentById(int id)
 	{
-		//return studentList.stream().filter(x-> x.getId()==id).findFirst().get();
-		return studentRepo.findById(id).get();
+		return studentList.stream().filter(x-> x.getId()==id).findFirst().get();
+		//return studentRepo.findById(id).get();
 	}
 	
 	@Override
