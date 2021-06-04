@@ -24,22 +24,24 @@ public class TeacherController {
 	@RequestMapping("/teachers")
 	public List<Teachers> teacherList(@RequestParam(required = false) List<String> subject,
 										@RequestParam(required = false) String jobType,
-										@RequestParam(required = false) String sort
+										@RequestParam(required = false) String sort,
+										@RequestParam(required = false,defaultValue = "0") Integer limit,
+										@RequestParam(required = false, defaultValue = "0") Integer offset
 	)
 	{
 		if(subject != null && jobType == null)
 		{
-			return teacherService.getTeacherBySubject(subject,sort);
+			return teacherService.getTeacherBySubject(subject,sort,limit,offset);
 		}
 		else if(subject == null && jobType != null)
 		{
-			return teacherService.getTeacherByJobType(jobType,sort);
+			return teacherService.getTeacherByJobType(jobType,sort,limit,offset);
 		}
 		else if(subject != null && jobType != null)
 		{
-			return teacherService.getTeacherBySubjectAndJobType(subject,jobType,sort);
+			return teacherService.getTeacherBySubjectAndJobType(subject,jobType,sort,limit,offset);
 		}
-			return teacherService.teacherList(sort);
+			return teacherService.teacherList(sort,limit,offset);
 	}
 	
 	

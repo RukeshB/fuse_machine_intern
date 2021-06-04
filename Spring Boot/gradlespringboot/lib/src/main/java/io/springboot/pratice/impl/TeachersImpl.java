@@ -32,23 +32,52 @@ public class TeachersImpl implements TeacherService{
 			String ascType = "ASC";
 			String descType = "DESC";
 			
-			Comparator<Teachers> compareById = (Teachers o1, Teachers o2) -> o1.getFirstName().compareTo( o2.getFirstName() );
+			Comparator<Teachers> compareByFirstName = (Teachers o1, Teachers o2) -> o1.getFirstName().compareTo( o2.getFirstName() );
 			
 			if(sortType.toUpperCase().equals(ascType))
 			{	 
-				Collections.sort(teacherList, compareById);
+				Collections.sort(teacherList, compareByFirstName);
 			}
 			else if(sortType.toUpperCase().equals(descType))
 			{
-				Collections.sort(teacherList, compareById.reversed());
+				Collections.sort(teacherList, compareByFirstName.reversed());
 			}
 		}
 		return teacherList;
 	}
 	
+	public List<Teachers> paging(List<Teachers> teacherList,int limit,int offset)
+	{
+		if(offset == 0)
+		{
+			offset = 1;
+		}
+		
+		if(limit != 0)
+		{
+			int toIndex = (offset * limit);
+			int fromIndex = (offset-1) *limit;
+			
+			if(toIndex > teacherList.size())
+			{
+				toIndex = teacherList.size();
+			}
+			if(fromIndex > teacherList.size())
+			{
+				fromIndex = teacherList.size();
+			}
+			
+			List<Teachers> subList ;
+			subList = teacherList.subList(fromIndex, toIndex);
+			return subList;
+		}
+		return teacherList;
+	}
+	
 	@Override
-	public List<Teachers> teacherList(String sort) {
-		return sorting(teachersData, sort);
+	public List<Teachers> teacherList(String sort, int limit, int offset) {
+		return paging(sorting(teachersData, sort),limit,offset);
+		//return sorting(teachersData, sort);
 		//return teachersData;
 	}
 
@@ -85,7 +114,7 @@ public class TeachersImpl implements TeacherService{
 	}
 
 	@Override
-	public List<Teachers> getTeacherBySubjectAndJobType(List<String> subject,String jobType, String sort) {
+	public List<Teachers> getTeacherBySubjectAndJobType(List<String> subject,String jobType, String sort, int limit, int offset) {
 		newTeacherDetail = new ArrayList<>(Arrays.asList());
 			int subjectFlag;
 			for(Teachers teacher: teachersData)
@@ -111,11 +140,12 @@ public class TeachersImpl implements TeacherService{
 				}
 			}
 		//return newTeacherDetail;
-		return sorting(newTeacherDetail, sort);
+//		return sorting(newTeacherDetail, sort);
+			return paging(sorting(newTeacherDetail, sort),limit,offset);
 	}
 
 	@Override
-	public List<Teachers> getTeacherByJobType(String jobType, String sort) {
+	public List<Teachers> getTeacherByJobType(String jobType, String sort, int limit, int offset) {
 		newTeacherDetail = new ArrayList<>(Arrays.asList());
 			for(Teachers teacher:teachersData)
 			{
@@ -125,11 +155,12 @@ public class TeachersImpl implements TeacherService{
 				}
 			}
 			//return newTeacherDetail;
-			return sorting(newTeacherDetail, sort);
+//			return sorting(newTeacherDetail, sort);
+			return paging(sorting(newTeacherDetail, sort),limit,offset);
 	}
 
 	@Override
-	public List<Teachers> getTeacherBySubject(List<String> subject, String sort) {
+	public List<Teachers> getTeacherBySubject(List<String> subject, String sort, int limit, int offset) {
 		newTeacherDetail = new ArrayList<>(Arrays.asList());
 		int subjectFlag;
 		for(Teachers teacher: teachersData)
@@ -152,7 +183,8 @@ public class TeachersImpl implements TeacherService{
 			}
 		}
 	//return newTeacherDetail;
-	return sorting(newTeacherDetail, sort);
+	//return sorting(newTeacherDetail, sort);
+		return paging(sorting(newTeacherDetail, sort),limit,offset);
 	}
 
 }
