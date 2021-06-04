@@ -28,7 +28,7 @@ public class TeacherController {
 //	}
 	
 	@RequestMapping("/teachers")
-	public List<Teachers> teacherList(@RequestParam("subject") String subject)
+	public List<Teachers> teacherList(@RequestParam(required = false) String subject)
 	{
 //		if(subject!=null)
 //		{

@@ -17,6 +17,12 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<String>("No such http request",HttpStatus.BAD_REQUEST);
 	}
 	
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public ResponseEntity<String> notFoundException(ResourceNotFoundException exception)
+	{
+		return new ResponseEntity<String>("Resource Not Found",HttpStatus.NOT_FOUND);
+	}
+	
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ResponseEntity<String> messageNotReadableException(HttpMessageNotReadableException ex)
 	{
@@ -29,9 +35,9 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<String>("Validation Error :"+ exception.getBindingResult().getFieldError().getDefaultMessage(),HttpStatus.BAD_REQUEST);
 	}
 	
-	@ExceptionHandler(Exception.class)
-	public ResponseEntity<String> exception(Exception ex)
-	{
-		return new ResponseEntity<String>(ex.toString(),HttpStatus.BAD_GATEWAY);
-	}
+//	@ExceptionHandler(Exception.class)
+//	public ResponseEntity<String> exception(Exception ex)
+//	{
+//		return new ResponseEntity<String>(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+//	}
 }
