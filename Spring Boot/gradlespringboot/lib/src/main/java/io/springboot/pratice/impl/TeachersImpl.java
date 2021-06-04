@@ -19,7 +19,7 @@ public class TeachersImpl implements TeacherService{
 			new Teachers(4,"subin","karki",new String[] {"science"},"part time"),
 			new Teachers(5,"season","jhonshon",new String[] {"science","math"},"part time")
 			));
-	private List<Teachers> subjectTeacher;
+	private List<Teachers> newTeacherDetail;
 	
 	@Override
 	public List<Teachers> teacherList() {
@@ -59,31 +59,72 @@ public class TeachersImpl implements TeacherService{
 	}
 
 	@Override
-	public List<Teachers> getTeacherBySubject(String subject) {
-		if(subject != null)
-		{
+	public List<Teachers> getTeacherBySubjectAndJobType(List<String> subject,String jobType) {
+		newTeacherDetail = new ArrayList<>(Arrays.asList());
 			int subjectFlag;
-			subjectTeacher = new ArrayList<>(Arrays.asList());
-			
-			for(int i=0;i<teachersData.size();i++)
+			for(Teachers teacher: teachersData)
 			{	
 				subjectFlag = 0;
-				String[] sub = teachersData.get(i).getSubjects();
+				String[] sub = teacher.getSubjects();
 				for(int j=0;j<sub.length;j++)
 				{
-					if(sub[j].equals(subject))
+					for(int k=0;k<subject.size();k++)
 					{
-						subjectFlag=1;
+						if(sub[j].equals(subject.get(k)))
+						{
+							subjectFlag++;
+						}
 					}
 				}
-				if(subjectFlag == 1)
+				if(subjectFlag == subject.size())
 				{
-					subjectTeacher.add(teachersData.get(i));
+					if(teacher.getJobType().equals(jobType))
+					{
+						newTeacherDetail.add(teacher);
+					}
 				}
 			}
-			return subjectTeacher;
+		return newTeacherDetail;
+	}
+
+	@Override
+	public List<Teachers> getTeacherByJobType(String jobType) {
+		newTeacherDetail = new ArrayList<>(Arrays.asList());
+			for(Teachers teacher:teachersData)
+			{
+				if(teacher.getJobType().equals(jobType))
+				{
+					newTeacherDetail.add(teacher);
+				}
+			}
+			return newTeacherDetail;
+	}
+
+	@Override
+	public List<Teachers> getTeacherBySubject(List<String> subject) {
+		newTeacherDetail = new ArrayList<>(Arrays.asList());
+		int subjectFlag;
+		for(Teachers teacher: teachersData)
+		{	
+			subjectFlag = 0;
+			String[] sub = teacher.getSubjects();
+			for(int j=0;j<sub.length;j++)
+			{
+				for(int k=0;k<subject.size();k++)
+				{
+					if(sub[j].equals(subject.get(k)))
+					{
+						subjectFlag++;
+					}
+				}
+			}
+			if(subjectFlag == subject.size())
+			{
+				newTeacherDetail.add(teacher);
+			}
 		}
-		return teachersData;
+	return newTeacherDetail;
+
 	}
 
 }
