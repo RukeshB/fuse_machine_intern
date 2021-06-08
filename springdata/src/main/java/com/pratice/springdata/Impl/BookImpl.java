@@ -27,4 +27,24 @@ public class BookImpl implements BookService{
 		return "Book insert successfully";
 	}
 
+	@Override
+	public Book getBookByID(int id) {
+		return bookRepo.findById(id).get();
+	}
+
+	@Override
+	public String updateBook(Book book, int id) {
+		Book bookByID = bookRepo.findById(id).get();
+		bookByID = book;
+		bookRepo.save(bookByID);
+//		return "update a book with id ="+id;
+		return null;
+	}
+
+	@Override
+	public String deleteBook(int id) {
+		bookRepo.deleteById(id);
+		return "delete a book with id ="+id;
+	}
+
 }
