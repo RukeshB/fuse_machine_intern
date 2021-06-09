@@ -1,6 +1,7 @@
 package com.pratice.springdata.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.websocket.server.PathParam;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pratice.springdata.model.Book;
@@ -53,4 +55,34 @@ public class BookController {
 	{
 		return bookService.deleteBook(id);
 	}
+	
+	@GetMapping("/books/page")
+	public Map<String, Object> pagination(@RequestParam(name = "pageNo", defaultValue = "0") int pageNo,
+										@RequestParam(name = "limit", defaultValue = "2") int limit,
+										@RequestParam(name = "sortBy", defaultValue = "id") String sortBy
+			)
+	{
+		return bookService.pagination(pageNo, limit, sortBy);
+	}
+	
+	//filtering query execution by example
+	@GetMapping("/books/example")
+	public List<Book> example(@RequestBody Book book)
+	{
+		return bookService.example(book);
+	}
+	
+	//filtering using query by method name
+		@GetMapping("/books/bookname")
+		public List<Book> listBookByBookName(@RequestParam(name = "bookname") String bookname)
+		{
+			return bookService.listBookByBookName(bookname);
+		}
+		
+		//filtering using query annotation
+		@GetMapping("/books/price")
+		public List<Book> filterByPrice(@RequestParam(name="price") int price)
+		{
+			return bookService.filterByprice(price);
+		}
 }
