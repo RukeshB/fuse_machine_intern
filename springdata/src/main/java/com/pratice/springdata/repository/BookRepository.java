@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.repository.Query;
 
 import com.pratice.springdata.model.Book;
 
-public interface BookRepository extends MongoRepository<Book, Integer> {
+public interface BookRepository extends MongoRepository<Book, String> {
 
 	List<Book> findByBookNameStartingWith(String bookName);
 	

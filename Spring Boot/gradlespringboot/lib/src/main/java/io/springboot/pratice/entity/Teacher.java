@@ -3,7 +3,7 @@ package io.springboot.pratice.entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class Teachers {
+public class Teacher {
 	
 	@NotNull
 	private int id;
@@ -17,12 +17,12 @@ public class Teachers {
 	private String[] subjects;
 	private String jobType;
 	
-	public Teachers()
+	public Teacher()
 	{
 		
 	}
 	
-	public Teachers(int id,String firstName, String lastName, String[] subjects, String jobType) {
+	public Teacher(int id,String firstName, String lastName, String[] subjects, String jobType) {
 		super();
 		this.id = id;
 		this.firstName = firstName;

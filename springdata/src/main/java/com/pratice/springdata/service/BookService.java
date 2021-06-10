@@ -9,9 +9,9 @@ public interface BookService {
 
 	public List<Book> bookList();
 	public String addBook(Book book);
-	public Book getBookByID(int id);
-	public String updateBook(Book book, int id);
-	public String deleteBook(int id);
+	public Book getBookByID(String id);
+	public String updateBook(Book book, String id);
+	public String deleteBook(String id);
 	public Map<String, Object> pagination(int pageNo,int limit,String sortBy);
 	
 	//filtering query execution by example

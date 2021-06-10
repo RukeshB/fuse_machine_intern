@@ -2,38 +2,39 @@ package io.springboot.pratice.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import io.springboot.pratice.entity.Teachers;
+import io.springboot.pratice.entity.Teacher;
 import io.springboot.pratice.service.TeacherService;
+import io.springboot.pratice.util.ListManipulation;
 
 @Service
 public class TeachersImpl implements TeacherService{
 
-	private List<Teachers> teachersData = new ArrayList<>(Arrays.asList(
-			new Teachers(1,"subin","karki",new String[] {"math","opt.math"},"full time"),
-			new Teachers(2,"jhon","smit",new String[] {"english","grammer"},"full time"),
-			new Teachers(3,"babin","duwal",new String[] {"computer"},"part time"),
-			new Teachers(4,"subin","karki",new String[] {"science"},"part time"),
-			new Teachers(5,"season","jhonshon",new String[] {"science","math"},"part time")
+	private List<Teacher> teachersData = new ArrayList<>(Arrays.asList(
+			new Teacher(1,"subin","karki",new String[] {"math","opt.math"},"full time"),
+			new Teacher(2,"jhon","smit",new String[] {"english","grammer"},"full time"),
+			new Teacher(3,"babin","duwal",new String[] {"computer"},"part time"),
+			new Teacher(4,"subin","karki",new String[] {"science"},"part time"),
+			new Teacher(5,"season","jhonshon",new String[] {"science","math"},"part time")
 			));
-	private List<Teachers> newTeacherDetail;
+	private List<Teacher> newTeacherDetail;
+	private ListManipulation<Teacher> listManipulation = new ListManipulation<>();
+	private Comparator<Teacher> compareByFirstName = (Teacher o1, Teacher o2) -> o1.getFirstName().compareTo( o2.getFirstName() );
 	
-	public List<Teachers> sorting(List<Teachers> teacherList,String sortType)
+	public List<Teacher> sorting(List<Teacher> teacherList,String sortType)
 	{
 		if(sortType != null)
 		{
 			String ascType = "ASC";
 			String descType = "DESC";
 			
-			Comparator<Teachers> compareByFirstName = (Teachers o1, Teachers o2) -> o1.getFirstName().compareTo( o2.getFirstName() );
-			
+			Comparator<Teacher> compareByFirstName = (Teacher o1, Teacher o2) -> o1.getFirstName().compareTo( o2.getFirstName() );
+//			Comparator<Teacher> compareByFirstName = (Comparator<Teacher>) teacherList;
 			if(sortType.toUpperCase().equals(ascType))
 			{	 
 				Collections.sort(teacherList, compareByFirstName);
@@ -46,7 +47,7 @@ public class TeachersImpl implements TeacherService{
 		return teacherList;
 	}
 	
-	public List<Teachers> paging(List<Teachers> teacherList,int limit,int offset)
+	public List<Teacher> paging(List<Teacher> teacherList,int limit,int offset)
 	{
 		if(offset == 0)
 		{
@@ -67,7 +68,7 @@ public class TeachersImpl implements TeacherService{
 				fromIndex = teacherList.size();
 			}
 			
-			List<Teachers> subList ;
+			List<Teacher> subList ;
 			subList = teacherList.subList(fromIndex, toIndex);
 			return subList;
 		}
@@ -75,24 +76,28 @@ public class TeachersImpl implements TeacherService{
 	}
 	
 	@Override
-	public List<Teachers> teacherList(String sort, int limit, int offset) {
-		return paging(sorting(teachersData, sort),limit,offset);
-		//return sorting(teachersData, sort);
-		//return teachersData;
+	public List<Teacher> teacherList(String sort, int limit, int offset) {
+//		return paging(sorting(teachersData, sort),limit,offset);
+//		Comparator<Teacher> compareByFirstName = (Teacher o1, Teacher o2) -> o1.getFirstName().compareTo( o2.getFirstName() );
+		List<Teacher> sortedList= listManipulation.sorting(teachersData,sort, compareByFirstName);
+		return listManipulation.paging(sortedList, limit, offset);
 	}
 
 	@Override
-	public Teachers getTeachersById(int id) {
+	public Teacher getTeachersById(int id) {
 		return teachersData.stream().filter(x->x.getId()==id).findFirst().get();
 	}
 
 	@Override
-	public void updateteachers(int id, Teachers teachers) {
-		for(int i=0; i<teachersData.size();i++)
+	public void updateteachers(int id, Teacher teachers) {
+		//for(int i=0; i<teachersData.size();i++)
+		for(Teacher teacher:teachersData)
 		{
-			if(teachersData.get(i).getId() == id)
+//			if(teachersData.get(i).getId() == id)
+				if(teacher.getId() == id)
 			{
-				teachersData.set(i, teachers);
+//				teachersData.set(i, teachers);
+				teachersData.set(teachersData.indexOf(teachers), teachers);	
 			}
 		}
 	}
@@ -109,23 +114,23 @@ public class TeachersImpl implements TeacherService{
 	}
 
 	@Override
-	public void addTeachers(Teachers teacher) {
+	public void addTeachers(Teacher teacher) {
 		teachersData.add(teacher);
 	}
 
-	@Override
-	public List<Teachers> getTeacherBySubjectAndJobType(List<String> subject,String jobType, String sort, int limit, int offset) {
+	public List<Teacher> getTeacherBySubjectAndJobType(List<String> subject,String jobType, String sort, int limit, int offset) {
 		newTeacherDetail = new ArrayList<>(Arrays.asList());
 			int subjectFlag;
-			for(Teachers teacher: teachersData)
+			for(Teacher teacher: teachersData)
 			{	
 				subjectFlag = 0;
 				String[] sub = teacher.getSubjects();
-				for(int j=0;j<sub.length;j++)
+//				for(int j=0;j<sub.length;j++)
+				for(String indvSubject: sub)
 				{
 					for(int k=0;k<subject.size();k++)
 					{
-						if(sub[j].equals(subject.get(k)))
+						if(indvSubject.equals(subject.get(k)))
 						{
 							subjectFlag++;
 						}
@@ -141,13 +146,14 @@ public class TeachersImpl implements TeacherService{
 			}
 		//return newTeacherDetail;
 //		return sorting(newTeacherDetail, sort);
-			return paging(sorting(newTeacherDetail, sort),limit,offset);
+//			return paging(sorting(newTeacherDetail, sort),limit,offset);
+			List<Teacher> sortedList= listManipulation.sorting(newTeacherDetail,sort, compareByFirstName);
+			return listManipulation.paging(sortedList, limit, offset);
 	}
 
-	@Override
-	public List<Teachers> getTeacherByJobType(String jobType, String sort, int limit, int offset) {
+	public List<Teacher> getTeacherByJobType(String jobType, String sort, int limit, int offset) {
 		newTeacherDetail = new ArrayList<>(Arrays.asList());
-			for(Teachers teacher:teachersData)
+			for(Teacher teacher:teachersData)
 			{
 				if(teacher.getJobType().equals(jobType))
 				{
@@ -156,22 +162,25 @@ public class TeachersImpl implements TeacherService{
 			}
 			//return newTeacherDetail;
 //			return sorting(newTeacherDetail, sort);
-			return paging(sorting(newTeacherDetail, sort),limit,offset);
+//			return paging(sorting(newTeacherDetail, sort),limit,offset);
+			List<Teacher> sortedList= listManipulation.sorting(newTeacherDetail,sort, compareByFirstName);
+			return listManipulation.paging(sortedList, limit, offset);
 	}
 
-	@Override
-	public List<Teachers> getTeacherBySubject(List<String> subject, String sort, int limit, int offset) {
+	public List<Teacher> getTeacherBySubject(List<String> subject, String sort, int limit, int offset) {
 		newTeacherDetail = new ArrayList<>(Arrays.asList());
 		int subjectFlag;
-		for(Teachers teacher: teachersData)
+		for(Teacher teacher: teachersData)
 		{	
 			subjectFlag = 0;
 			String[] sub = teacher.getSubjects();
-			for(int j=0;j<sub.length;j++)
+			//for(int j=0;j<sub.length;j++)
+			for(String indvSubject: sub)
 			{
 				for(int k=0;k<subject.size();k++)
 				{
-					if(sub[j].equals(subject.get(k)))
+//					if(sub[j].equals(subject.get(k)))
+					if(indvSubject.equals(subject.get(k)))
 					{
 						subjectFlag++;
 					}
@@ -182,9 +191,26 @@ public class TeachersImpl implements TeacherService{
 				newTeacherDetail.add(teacher);
 			}
 		}
-	//return newTeacherDetail;
-	//return sorting(newTeacherDetail, sort);
-		return paging(sorting(newTeacherDetail, sort),limit,offset);
+//		return paging(sorting(newTeacherDetail, sort),limit,offset);
+		List<Teacher> sortedList= listManipulation.sorting(newTeacherDetail,sort, compareByFirstName);
+		return listManipulation.paging(sortedList, limit, offset);
+	}
+
+	@Override
+	public List<Teacher> filter(List<String> subject, String jobType, String sort, int limit, int offset) {
+		if(subject != null && jobType == null)
+		{
+			return getTeacherBySubject(subject,sort,limit,offset);
+		}
+		else if(subject == null && jobType != null)
+		{
+			return getTeacherByJobType(jobType,sort,limit,offset);
+		}
+		else if(subject != null && jobType != null)
+		{
+			return getTeacherBySubjectAndJobType(subject,jobType,sort,limit,offset);
+		}
+		return teacherList(sort,limit,offset);
 	}
 
 }

@@ -1,9 +1,6 @@
 package com.pratice.springdata.model;
 
-import java.util.List;
-
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
@@ -18,14 +15,13 @@ import lombok.ToString;
 @Setter
 @ToString
 
-@Document(collection = "Book")
-public class Book {
+@Document(collection = "author")
+public class Author {
 
 	@Id
 	private String id;
-	private String bookName;
-	@DBRef
-	private List<Author> author;
-	private int edition;
-	private int price;
+	private String firstName;
+	private String lastName;
+	private String address;
+	private long number;
 }

@@ -38,12 +38,12 @@ public class BookImpl implements BookService{
 	}
 
 	@Override
-	public Book getBookByID(int id) {
+	public Book getBookByID(String id) {
 		return bookRepo.findById(id).get();
 	}
 
 	@Override
-	public String updateBook(Book book, int id) {
+	public String updateBook(Book book, String id) {
 		Book bookByID = bookRepo.findById(id).get();
 		bookByID = book;
 		bookRepo.save(bookByID);
@@ -52,7 +52,7 @@ public class BookImpl implements BookService{
 	}
 
 	@Override
-	public String deleteBook(int id) {
+	public String deleteBook(String id) {
 		bookRepo.deleteById(id);
 		return "delete a book with id ="+id;
 	}
