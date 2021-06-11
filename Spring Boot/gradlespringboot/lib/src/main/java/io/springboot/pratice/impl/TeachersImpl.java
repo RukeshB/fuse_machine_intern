@@ -2,8 +2,6 @@ package io.springboot.pratice.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -11,7 +9,6 @@ import org.springframework.stereotype.Service;
 import io.springboot.pratice.entity.Teacher;
 import io.springboot.pratice.service.TeacherService;
 import io.springboot.pratice.util.FilterTeacher;
-import io.springboot.pratice.util.ListManipulation;
 
 @Service
 public class TeachersImpl implements TeacherService{
@@ -69,7 +66,13 @@ public class TeachersImpl implements TeacherService{
 		}
 		else if(subject != null && jobType != null)
 		{
-			return filterTeacherData.getTeacherBySubjectAndJobType(teachersData,subject,jobType,sort,limit,offset);
+			//filter teacher by jobtype without pagination
+			List<Teacher> filterByJobType = filterTeacherData.getTeacherByJobType(teachersData, jobType, sort, 0, offset);
+			
+			//again filter teacher(filtered by job type) by subject with pagination
+			return filterTeacherData.getTeacherBySubject(filterByJobType, subject, sort, limit, offset);
+			
+//			return filterTeacherData.getTeacherBySubjectAndJobType(teachersData,subject,jobType,sort,limit,offset);
 		}
 		return filterTeacherData.teacherList(teachersData,sort,limit,offset);
 	}

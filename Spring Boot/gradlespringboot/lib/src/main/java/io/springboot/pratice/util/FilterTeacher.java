@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import io.springboot.pratice.entity.Teacher;
-import io.springboot.pratice.impl.TeachersImpl;
 
 public class FilterTeacher{
 	
@@ -19,10 +18,10 @@ public class FilterTeacher{
 		return listManipulation.paging(sortedList, limit, offset);
 	}
 
-	public List<Teacher> getTeacherBySubjectAndJobType(List<Teacher> teachersData, List<String> subjects,String jobType, String sort, int limit, int offset) {
-		List<Teacher> filterByJobType = getTeacherByJobType(teachersData, jobType, sort, 0, offset);
-		return getTeacherBySubject(filterByJobType, subjects, sort, limit, offset);
-	}
+//	public List<Teacher> getTeacherBySubjectAndJobType(List<Teacher> teachersData, List<String> subjects,String jobType, String sort, int limit, int offset) {
+//		List<Teacher> filterByJobType = getTeacherByJobType(teachersData, jobType, sort, 0, offset);
+//		return getTeacherBySubject(filterByJobType, subjects, sort, limit, offset);
+//	}
 
 	public List<Teacher> getTeacherByJobType(List<Teacher> teachersData, String jobType, String sort, int limit, int offset) {
 		newTeacherDetail = new ArrayList<>(Arrays.asList());
