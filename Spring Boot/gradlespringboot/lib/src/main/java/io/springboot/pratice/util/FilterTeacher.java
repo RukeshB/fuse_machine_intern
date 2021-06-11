@@ -20,32 +20,8 @@ public class FilterTeacher{
 	}
 
 	public List<Teacher> getTeacherBySubjectAndJobType(List<Teacher> teachersData, List<String> subjects,String jobType, String sort, int limit, int offset) {
-		newTeacherDetail = new ArrayList<>(Arrays.asList());
-			int subjectFlag;
-			for(Teacher teacher: teachersData)
-			{	
-				subjectFlag = 0;
-				String[] sub = teacher.getSubjects();
-				for(String indvSubject: sub)
-				{
-					for(String subject:subjects)
-					{
-						if(indvSubject.equals(subject))
-						{
-							subjectFlag++;
-						}
-					}
-				}
-				if(subjectFlag == subjects.size())
-				{
-					if(teacher.getJobType().equals(jobType))
-					{
-						newTeacherDetail.add(teacher);
-					}
-				}
-			}
-			List<Teacher> sortedList= listManipulation.sorting(newTeacherDetail,sort, compareByFirstName);
-			return listManipulation.paging(sortedList, limit, offset);
+		List<Teacher> filterByJobType = getTeacherByJobType(teachersData, jobType, sort, 0, offset);
+		return getTeacherBySubject(filterByJobType, subjects, sort, limit, offset);
 	}
 
 	public List<Teacher> getTeacherByJobType(List<Teacher> teachersData, String jobType, String sort, int limit, int offset) {
