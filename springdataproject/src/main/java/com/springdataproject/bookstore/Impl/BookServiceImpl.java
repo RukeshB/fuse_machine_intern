@@ -6,20 +6,25 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.*;
 import com.springdataproject.bookstore.dto.AuthorDto;
 import com.springdataproject.bookstore.dto.BookDto;
 import com.springdataproject.bookstore.dto.UserDto;
 import com.springdataproject.bookstore.model.Author;
 import com.springdataproject.bookstore.model.Book;
 import com.springdataproject.bookstore.model.User;
+import com.springdataproject.bookstore.repository.AuthorRepository;
 import com.springdataproject.bookstore.repository.BookRepository;
+import com.springdataproject.bookstore.repository.UserRepository;
 import com.springdataproject.bookstore.service.BookService;
 
 @Service
-public class BookServiceImpl implements BookService {
+public class BookServiceImpl implements BookService{
 
 	@Autowired
 	BookRepository repo ;
+	AuthorRepository authorRepo;
+	UserRepository userRepo;
 	
 	@Override
 	public List<BookDto> getBookList() {
@@ -94,11 +99,27 @@ public class BookServiceImpl implements BookService {
 		if(book.getAuthorsid() != null && book.getUserid()!= null)
 		{
 			List<Author> authors = new ArrayList<>();
+			User user;
 			for(AuthorDto author:book.getAuthorsid())
 			{
-				authors.add(Author.builder().id(author.getId()).build());
+				if(authorRepo.findById(author.getId()).get() != null)
+				{
+					authors.add(Author.builder().id(author.getId()).build());
+				}
+				else
+				{
+					throw new IllegalArgumentException();
+				}
 			}
-			User user = User.builder().id(book.getUserid().getId()).build();
+			
+			if(userRepo.findById(book.getUserid().getId())!=null)
+			{
+				user = User.builder().id(book.getUserid().getId()).build();
+			}
+			else
+			{
+				throw new IllegalArgumentException();
+			}
 			
 			Book bookModel = Book.builder().bookName(book.getBookName())
 											.edition(book.getEdition())
@@ -139,7 +160,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public String deleteBook(String id) {
 		repo.deleteById(id);
-		return "delete user with id "+id;
+		return "delete Book with id "+id;
 	}
 
 }

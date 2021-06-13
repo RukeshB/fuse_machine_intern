@@ -50,21 +50,34 @@ public class AuthorServiceImpl implements AuthorService {
 	}
 
 	@Override
-	public AuthorDto addAuthor(AuthorDto role) {
-		// TODO Auto-generated method stub
-		return null;
+	public AuthorDto addAuthor(AuthorDto author) {
+		Author authorModel = Author.builder().firstName(author.getFirstName())
+											.lastName(author.getLastName())
+											.phone(author.getPhone())
+											.address(author.getAddress())
+											.build();
+		repo.insert(authorModel);
+		return author;
 	}
 
 	@Override
-	public AuthorDto updateAuthor(String id, AuthorDto role) {
-		// TODO Auto-generated method stub
-		return null;
+	public AuthorDto updateAuthor(String id, AuthorDto author) {
+		if(repo.findById(id)!= null)
+		{
+			Author authorModel = Author.builder().firstName(author.getFirstName())
+					.lastName(author.getLastName())
+					.phone(author.getPhone())
+					.address(author.getAddress())
+					.build();
+			repo.save(authorModel);
+		}
+		return author;
 	}
 
 	@Override
 	public String deleteAuthor(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		repo.deleteById(id);
+		return "delete Author with id "+id;
 	}
 
 }
