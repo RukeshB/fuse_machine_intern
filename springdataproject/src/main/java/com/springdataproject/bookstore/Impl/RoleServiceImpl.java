@@ -47,10 +47,9 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public RoleDto addRole(RoleDto role) {
-		Role roleModel = Role.builder().id(role.getId())
-				.role(role.getRole())
-				.access(role.getAccess())
-				.build();
+		Role roleModel = Role.builder().role(role.getRole())
+										.access(role.getAccess())
+										.build();
 		repo.insert(roleModel);
 		return role;
 	}
@@ -59,11 +58,11 @@ public class RoleServiceImpl implements RoleService {
 	public RoleDto updateRole(String id, RoleDto role) {
 		if(repo.findById(id)!=null)
 		{
-			Role roleModel = Role.builder().id(role.getId())
-					.role(role.getRole())
-					.access(role.getAccess())
-					.build();
-			repo.insert(roleModel);
+			Role roleModel = Role.builder().id(id)
+											.role(role.getRole())
+											.access(role.getAccess())
+											.build();
+			repo.save(roleModel);
 			return role;
 		}
 		return null;

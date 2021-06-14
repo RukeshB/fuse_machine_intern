@@ -96,30 +96,33 @@ public class BookServiceImpl implements BookService{
 
 	@Override
 	public BookDto addBook(BookDto book) {
-		if(book.getAuthorsid() != null && book.getUserid()!= null)
-		{
+//		if(book.getAuthorsid() != null && book.getUserid()!= null)
+//		{
 			List<Author> authors = new ArrayList<>();
 			User user;
 			for(AuthorDto author:book.getAuthorsid())
 			{
-				if(authorRepo.findById(author.getId()).get() != null)
-				{
-					authors.add(Author.builder().id(author.getId()).build());
-				}
-				else
-				{
-					throw new IllegalArgumentException();
-				}
+//				if(authorRepo.findById(author.getId()).get() != null)
+//				{
+//					authors.add(Author.builder().id(author.getId()).build());
+//				}
+//				else
+//				{
+//					throw new IllegalArgumentException();
+//				}
+				authors.add(Author.builder().id(author.getId()).build());
 			}
 			
-			if(userRepo.findById(book.getUserid().getId())!=null)
-			{
-				user = User.builder().id(book.getUserid().getId()).build();
-			}
-			else
-			{
-				throw new IllegalArgumentException();
-			}
+//			if(userRepo.findById(book.getUserid().getId())!=null)
+//			{
+//				user = User.builder().id(book.getUserid().getId()).build();
+//			}
+//			else
+//			{
+//				throw new IllegalArgumentException();
+//			}
+			
+			user = User.builder().id(book.getUserid().getId()).build();
 			
 			Book bookModel = Book.builder().bookName(book.getBookName())
 											.edition(book.getEdition())
@@ -128,7 +131,7 @@ public class BookServiceImpl implements BookService{
 											.userid(user)
 											.build();
 			repo.insert(bookModel);
-		}
+//		}
 		return book;
 	}
 
@@ -145,13 +148,14 @@ public class BookServiceImpl implements BookService{
 				}
 				User user = User.builder().id(book.getUserid().getId()).build();
 				
-				Book bookModel = Book.builder().bookName(book.getBookName())
+				Book bookModel = Book.builder().id(id)
+												.bookName(book.getBookName())
 												.edition(book.getEdition())
 												.price(book.getPrice())
 												.authorsid(authors)
 												.userid(user)
 												.build();
-				repo.insert(bookModel);
+				repo.save(bookModel);
 			}
 		}
 		return book;

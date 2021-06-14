@@ -16,7 +16,7 @@ import com.springdataproject.bookstore.dto.BookDto;
 import com.springdataproject.bookstore.service.BookService;
 
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/books")
 public class BookController {
 
 	@Autowired
@@ -29,7 +29,7 @@ public class BookController {
 	}
 	
 	@GetMapping("/{id}")
-	public BookDto getBookByID(String id)
+	public BookDto getBookByID(@PathVariable String id)
 	{
 		return service.getBookyID(id);
 	}

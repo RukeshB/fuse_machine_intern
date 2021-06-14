@@ -64,11 +64,12 @@ public class AuthorServiceImpl implements AuthorService {
 	public AuthorDto updateAuthor(String id, AuthorDto author) {
 		if(repo.findById(id)!= null)
 		{
-			Author authorModel = Author.builder().firstName(author.getFirstName())
-					.lastName(author.getLastName())
-					.phone(author.getPhone())
-					.address(author.getAddress())
-					.build();
+			Author authorModel = Author.builder().id(id)
+												.firstName(author.getFirstName())
+												.lastName(author.getLastName())
+												.phone(author.getPhone())
+												.address(author.getAddress())
+												.build();
 			repo.save(authorModel);
 		}
 		return author;

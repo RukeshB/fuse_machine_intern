@@ -16,7 +16,7 @@ import com.springdataproject.bookstore.dto.RoleDto;
 import com.springdataproject.bookstore.service.RoleService;
 
 @RestController
-@RequestMapping("/role")
+@RequestMapping("/roles")
 public class RoleController {
 	
 	@Autowired

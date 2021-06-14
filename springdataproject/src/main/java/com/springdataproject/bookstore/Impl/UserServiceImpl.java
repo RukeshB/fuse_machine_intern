@@ -97,7 +97,8 @@ public class UserServiceImpl implements UserService {
 				roleList.add(Role.builder().id(roleDto.getId()).build());
 			}
 			
-			User userModel = User.builder().firstName(user.getFirstName())
+			User userModel = User.builder().id(id)
+											.firstName(user.getFirstName())
 											.lastName(user.getLastName())
 											.email(user.getEmail())
 											.phone(user.getPhone())
