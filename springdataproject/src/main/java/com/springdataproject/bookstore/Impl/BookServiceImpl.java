@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.lang.*;
 import com.springdataproject.bookstore.dto.AuthorDto;
 import com.springdataproject.bookstore.dto.BookDto;
 import com.springdataproject.bookstore.dto.UserDto;
@@ -26,9 +29,37 @@ public class BookServiceImpl implements BookService{
 	AuthorRepository authorRepo;
 	UserRepository userRepo;
 	
+	public List<Book> pagination(int pageNo, int limit, String sortBy,
+			String bookName,String authorName,int statringPrice,int endingprice) 
+	{
+		Page<Book> bookData;
+		Sort sort = Sort.by(sortBy);
+		Pageable Page = PageRequest.of(pageNo, limit, sort);
+		if(bookName != null && authorName==null && endingprice == 0)
+		{
+			bookData = repo.findByBookName(bookName,Page); 
+		}
+		else if(bookName == null && authorName==null && endingprice != 0)
+		{
+			bookData = repo.filterByPriceRange(statringPrice, endingprice, Page);
+		}
+		else if(bookName != null && authorName==null && endingprice != 0)
+		{
+			bookData = repo.filterByPriceRangeAndBookName(statringPrice, endingprice,bookName, Page);
+		}
+		else
+		{
+			bookData = repo.findAll(Page);
+		}
+		return bookData.getContent();
+	}
+	
 	@Override
-	public List<BookDto> getBookList() {
-		List<Book> bookList = repo.findAll();
+	public List<BookDto> getBookList(int pageNo, int limit, String sortBy,
+			String bookName,String authorName,int statringPrice,int endingprice) 
+	{
+		List<Book> bookList = pagination(pageNo, limit, sortBy,bookName,
+				authorName,statringPrice,endingprice);
 		List<BookDto> bookDtoList = new ArrayList<>();
 		for(Book book:bookList)
 		{

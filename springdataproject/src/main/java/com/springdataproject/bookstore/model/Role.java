@@ -1,5 +1,7 @@
 package com.springdataproject.bookstore.model;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -22,6 +24,8 @@ public class Role {
 
 	@Id
 	private String id;
+	@NotNull(message = "role name required")
 	private String role;
+	@NotNull(message = "access required")
 	private String[] access;
 }

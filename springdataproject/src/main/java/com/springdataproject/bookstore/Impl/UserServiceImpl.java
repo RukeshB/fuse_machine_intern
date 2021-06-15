@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.springdataproject.bookstore.dto.RoleDto;
@@ -19,9 +23,33 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository repo;
 	
+	public List<User> pagination(int pageNo, int limit, String sortBy,String firstName,String lastName) {
+		Page<User> userData;
+		Sort sort = Sort.by(sortBy);
+		Pageable Page = PageRequest.of(pageNo, limit, sort);
+		if(firstName != null && lastName == null)
+		{
+			userData = repo.findByFirstName(firstName, Page);
+		}
+		else if(firstName == null && lastName != null)
+		{
+			userData = repo.findByLastName(lastName, Page);
+		}
+		else if(firstName !=null && lastName != null)
+		{
+			userData = repo.filterByFirstAndLastName(firstName, lastName, Page);
+		}
+		else
+		{
+			userData = repo.findAll(Page);
+		}
+		
+		return userData.getContent();
+	}
+	
 	@Override
-	public List<UserDto> getUserList() {
-		List<User> userList = repo.findAll();
+	public List<UserDto> getUserList(int pageNo, int limit, String sortBy,String firstName,String lastName) {
+		List<User> userList = pagination(pageNo, limit, sortBy,firstName,lastName);
 		List<UserDto> userDtoList = new ArrayList<>();
 		
 		for(User user:userList)

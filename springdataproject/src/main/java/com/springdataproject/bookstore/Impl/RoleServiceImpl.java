@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.springdataproject.bookstore.dto.RoleDto;
@@ -17,9 +21,24 @@ public class RoleServiceImpl implements RoleService {
 	@Autowired
 	RoleRepository repo;
 	
+	public List<Role> pagination(int pageNo, int limit, String sortBy,String access) {
+		Page<Role> roleData ;
+		Sort sort = Sort.by(sortBy);
+		Pageable Page = PageRequest.of(pageNo, limit, sort);
+		if(access != null)
+		{
+			roleData = repo.findByAccess(access, Page);
+		}
+		else
+		{
+			roleData = repo.findAll(Page);
+		}
+		return roleData.getContent();
+	}
+	
 	@Override
-	public List<RoleDto> getRoleList() {
-		List<Role> roleList = repo.findAll();
+	public List<RoleDto> getRoleList(int pageNo, int limit, String sortBy,String access) {
+		List<Role> roleList = pagination(pageNo, limit, sortBy, access);
 		List<RoleDto> roleDtoList = new ArrayList<>();
 		
 		for(Role role:roleList)
