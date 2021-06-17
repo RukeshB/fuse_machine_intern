@@ -23,6 +23,7 @@ public class BookDto {
 	private String id;
 	private String name;
 	private String[] category;
-	private List<AuthorDto> authorid;
+	private List<String> authorid;
+	private List<AuthorDto> authors;
 	private int quantity;
 }

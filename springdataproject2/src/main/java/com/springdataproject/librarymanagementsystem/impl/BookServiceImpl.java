@@ -42,7 +42,7 @@ public class BookServiceImpl implements BookService{
 			BookDto bookDto = BookDto.builder().id(book.getId())
 												.name(book.getName())
 												.category(book.getCategory())
-												.authorid(authorDtoList)
+												.authors(authorDtoList)
 												.quantity(book.getQuantity())
 												.build();
 			bookDtoList.add(bookDto);
@@ -63,7 +63,7 @@ public class BookServiceImpl implements BookService{
 			BookDto bookDto = BookDto.builder().id(book.getId())
 												.name(book.getName())
 												.category(book.getCategory())
-												.authorid(authorDtoList)
+												.authors(authorDtoList)
 												.quantity(book.getQuantity())
 												.build();
 		
@@ -73,9 +73,9 @@ public class BookServiceImpl implements BookService{
 	@Override
 	public BookDto addbook(BookDto book) {
 		List<String> authorIdList = new ArrayList<>();
-		for(AuthorDto authorDto:book.getAuthorid())
+		for(String authorID:book.getAuthorid())
 		{
-			String authorID = authorDto.getId();
+			//String authorID = authorDto.getId();
 			authorIdList.add(authorID);
 		}
 		Book bookModel = Book.builder().name(book.getName())
@@ -93,9 +93,9 @@ public class BookServiceImpl implements BookService{
 		Book bookModel = bookRepo.findById(id).orElseThrow(IllegalStateException::new);
 		List<String> authorIdList = new ArrayList<>();
 
-		for(AuthorDto authorDto:book.getAuthorid())
+		for(String authorID:book.getAuthorid())
 		{
-			String authorID = authorDto.getId();
+			//String authorID = authorDto.getId();
 			authorIdList.add(authorID);
 		}
 		bookModel = Book.builder().id(id)
@@ -105,13 +105,13 @@ public class BookServiceImpl implements BookService{
 									.quantity(book.getQuantity())
 									.build();
 		
-		bookRepo.insert(bookModel);
+		bookRepo.save(bookModel);
 		return book;
 	}
 
 	@Override
 	public String deletebook(String id) {
-		authorRepo.deleteById(id);
-		return "Author with id : "+id+" is deleted";
+		bookRepo.deleteById(id);
+		return "Book with id : "+id+" is deleted";
 	}
 }
