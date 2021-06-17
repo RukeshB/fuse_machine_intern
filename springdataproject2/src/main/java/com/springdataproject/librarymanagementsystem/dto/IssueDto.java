@@ -1,5 +1,6 @@
 package com.springdataproject.librarymanagementsystem.dto;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -21,6 +22,9 @@ import lombok.ToString;
 public class IssueDto {
 	@Id
 	private String id;
-	private List<BookDto> bookID;
-	private UserDto userID;
+	private List<String> bookID;
+	private String userID;
+	private List<BookDto> books;
+	private UserDto user;
+	private Date issueDate;
 }

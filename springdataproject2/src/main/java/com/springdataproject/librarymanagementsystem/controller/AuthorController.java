@@ -2,6 +2,8 @@ package com.springdataproject.librarymanagementsystem.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,13 +44,13 @@ public class AuthorController {
 	}
 	
 	@PostMapping
-	public AuthorDto addAuthor(@RequestBody AuthorDto author)
+	public AuthorDto addAuthor(@Valid @RequestBody AuthorDto author)
 	{
 		return service.addAuthor(author);
 	}
 	
 	@PutMapping("/{id}")
-	public AuthorDto updateAuthor(@PathVariable String id,@RequestBody AuthorDto author) throws Exception
+	public AuthorDto updateAuthor(@PathVariable String id,@Valid @RequestBody AuthorDto author) throws Exception
 	{
 		return service.updateAuthor(id, author);
 	}

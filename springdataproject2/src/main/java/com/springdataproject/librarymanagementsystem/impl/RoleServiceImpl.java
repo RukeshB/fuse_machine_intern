@@ -36,7 +36,8 @@ public class RoleServiceImpl implements RoleService{
 
 	@Override
 	public RoleDto getroleByID(String id) {
-		Role role = roleRepo.findById(id).orElseThrow(IllegalStateException::new);
+		Role role = roleRepo.findById(id)
+				.orElseThrow(()->new IllegalStateException("Role data not Found"));
 //				.orElseThrow(
 //				()->new Exception("role with id: "+id+" not found"));
 		
@@ -61,7 +62,8 @@ public class RoleServiceImpl implements RoleService{
 
 	@Override
 	public RoleDto updaterole(String id, RoleDto role) {
-		Role roleModel = roleRepo.findById(id).orElseThrow(IllegalStateException::new);
+		Role roleModel = roleRepo.findById(id)
+				.orElseThrow(()->new IllegalStateException("Role data not Found"));
 //				.orElseThrow(
 //				()->new Exception("role with id: "+id+" not found"));
 		

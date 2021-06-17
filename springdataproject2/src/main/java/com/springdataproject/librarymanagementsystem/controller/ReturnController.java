@@ -1,5 +1,6 @@
 package com.springdataproject.librarymanagementsystem.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -15,48 +16,49 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.springdataproject.librarymanagementsystem.dto.UserDto;
-import com.springdataproject.librarymanagementsystem.service.UserService;
+import com.springdataproject.librarymanagementsystem.dto.ReturnDto;
+import com.springdataproject.librarymanagementsystem.service.ReturnService;
 
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/returns")
+public class ReturnController {
+
 	@Autowired
-	UserService service;
+	ReturnService service;
 	
 	@GetMapping
-	public List<UserDto> getuserList(
-			@RequestParam(required = false) String firstName,
-			@RequestParam(required = false) String lastName,
+	public List<ReturnDto> getreturnList(
+			@RequestParam(required = false) Date StartingDate,
+			@RequestParam(required = false) Date endingDate,
 			@RequestParam(defaultValue = "0") int pageNo,
 			@RequestParam(defaultValue = "2") int limit,
 			@RequestParam(defaultValue = "id") String sortBy
 					)
 	{
-		return service.getuserList(firstName,lastName,pageNo,limit,sortBy);
+		return service.getreturnbookList(StartingDate, endingDate,pageNo,limit,sortBy);
 	}
 	
 	@GetMapping("/{id}")
-	public UserDto getuserByID(@PathVariable String id) throws Exception
+	public ReturnDto getreturnByID(@PathVariable String id) throws Exception
 	{
-		return service.getuserByID(id);
+		return service.getreturnbookByID(id);
 	}
 	
 	@PostMapping
-	public UserDto adduser(@Valid @RequestBody UserDto user)
+	public ReturnDto addreturn(@Valid @RequestBody ReturnDto returnBook)
 	{
-		return service.adduser(user);
+		return service.addreturnbook(returnBook);
 	}
 	
 	@PutMapping("/{id}")
-	public UserDto updateuser(@PathVariable String id,@Valid @RequestBody UserDto user) throws Exception
+	public ReturnDto updatereturn(@PathVariable String id,@Valid @RequestBody ReturnDto returnBook)
 	{
-		return service.updateuser(id, user);
+		return service.updatereturnbook(id, returnBook);
 	}
 	
 	@DeleteMapping("/{id}")
-	public String deleteuser(@PathVariable String id)
+	public String deletereturn(@PathVariable String id)
 	{
-		return service.deleteuser(id);
+		return service.deletereturnbook(id);
 	}
 }

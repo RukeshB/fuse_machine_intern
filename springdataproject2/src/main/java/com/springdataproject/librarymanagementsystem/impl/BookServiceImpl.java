@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.springdataproject.librarymanagementsystem.dto.AuthorDto;
 import com.springdataproject.librarymanagementsystem.dto.BookDto;
 import com.springdataproject.librarymanagementsystem.model.Book;
-import com.springdataproject.librarymanagementsystem.repository.AuthorRepository;
 import com.springdataproject.librarymanagementsystem.repository.BookRepository;
 import com.springdataproject.librarymanagementsystem.service.AuthorService;
 import com.springdataproject.librarymanagementsystem.service.BookService;
@@ -19,8 +18,6 @@ public class BookServiceImpl implements BookService{
 	
 	@Autowired
 	private BookRepository bookRepo;
-	@Autowired
-	private AuthorRepository authorRepo;
 	@Autowired
 	private AuthorService authorService;
 
@@ -52,7 +49,8 @@ public class BookServiceImpl implements BookService{
 
 	@Override
 	public BookDto getbookByID(String id) {
-		Book book = bookRepo.findById(id).orElseThrow(IllegalStateException::new);
+		Book book = bookRepo.findById(id)
+				.orElseThrow(()->new IllegalStateException("Book data not Found"));
 		List<AuthorDto> authorDtoList = new ArrayList<>();
 
 			for(String authorid:book.getAuthorid())
@@ -90,7 +88,8 @@ public class BookServiceImpl implements BookService{
 
 	@Override
 	public BookDto updatebook(String id, BookDto book) {
-		Book bookModel = bookRepo.findById(id).orElseThrow(IllegalStateException::new);
+		Book bookModel = bookRepo.findById(id)
+				.orElseThrow(()->new IllegalStateException("Book data not Found"));
 		List<String> authorIdList = new ArrayList<>();
 
 		for(String authorID:book.getAuthorid())

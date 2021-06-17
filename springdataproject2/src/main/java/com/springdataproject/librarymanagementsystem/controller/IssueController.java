@@ -1,5 +1,6 @@
 package com.springdataproject.librarymanagementsystem.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -15,48 +16,49 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.springdataproject.librarymanagementsystem.dto.UserDto;
-import com.springdataproject.librarymanagementsystem.service.UserService;
+import com.springdataproject.librarymanagementsystem.dto.IssueDto;
+import com.springdataproject.librarymanagementsystem.service.IssueService;
 
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/issues")
+public class IssueController {
+	
 	@Autowired
-	UserService service;
+	IssueService service;
 	
 	@GetMapping
-	public List<UserDto> getuserList(
-			@RequestParam(required = false) String firstName,
-			@RequestParam(required = false) String lastName,
+	public List<IssueDto> getissueList(
+			@RequestParam(required = false) Date StartingDate,
+			@RequestParam(required = false) Date endingDate,
 			@RequestParam(defaultValue = "0") int pageNo,
 			@RequestParam(defaultValue = "2") int limit,
 			@RequestParam(defaultValue = "id") String sortBy
 					)
 	{
-		return service.getuserList(firstName,lastName,pageNo,limit,sortBy);
+		return service.getissueList(StartingDate, endingDate,pageNo,limit,sortBy);
 	}
 	
 	@GetMapping("/{id}")
-	public UserDto getuserByID(@PathVariable String id) throws Exception
+	public IssueDto getissueByID(@PathVariable String id)
 	{
-		return service.getuserByID(id);
+		return service.getissueByID(id);
 	}
 	
 	@PostMapping
-	public UserDto adduser(@Valid @RequestBody UserDto user)
+	public IssueDto addissue(@Valid @RequestBody IssueDto issue)
 	{
-		return service.adduser(user);
+		return service.addissue(issue);
 	}
 	
 	@PutMapping("/{id}")
-	public UserDto updateuser(@PathVariable String id,@Valid @RequestBody UserDto user) throws Exception
+	public IssueDto updateissue(@PathVariable String id,@Valid @RequestBody IssueDto issue) throws Exception
 	{
-		return service.updateuser(id, user);
+		return service.updateissue(id, issue);
 	}
 	
 	@DeleteMapping("/{id}")
-	public String deleteuser(@PathVariable String id)
+	public String deleteissue(@PathVariable String id)
 	{
-		return service.deleteuser(id);
+		return service.deleteissue(id);
 	}
 }

@@ -2,6 +2,8 @@ package com.springdataproject.librarymanagementsystem.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,13 +43,13 @@ public class RoleController {
 	}
 	
 	@PostMapping
-	public RoleDto addrole(@RequestBody RoleDto role)
+	public RoleDto addrole(@Valid @RequestBody RoleDto role)
 	{
 		return service.addrole(role);
 	}
 	
 	@PutMapping("/{id}")
-	public RoleDto updaterole(@PathVariable String id,@RequestBody RoleDto role) throws Exception
+	public RoleDto updaterole(@PathVariable String id,@Valid @RequestBody RoleDto role) throws Exception
 	{
 		return service.updaterole(id, role);
 	}

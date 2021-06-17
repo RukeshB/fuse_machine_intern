@@ -1,6 +1,9 @@
 package com.springdataproject.librarymanagementsystem.model;
 
+import java.util.Date;
 import java.util.List;
+
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -19,10 +22,11 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 
-@Document("returns")
+@Document("return")
 public class Return {
 	@Id
 	private String id;
-	private List<String> bookID;
-	private String userID;
+	@NotBlank(message = "issueID can not be blank")
+	private List<String> issueID;
+	private Date returnDate;
 }

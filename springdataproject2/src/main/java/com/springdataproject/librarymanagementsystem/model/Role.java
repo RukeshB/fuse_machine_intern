@@ -2,6 +2,9 @@ package com.springdataproject.librarymanagementsystem.model;
 
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -23,6 +26,7 @@ import lombok.ToString;
 public class Role {
 	@Id
 	private String id;
+	@NotBlank(message = "role can not be blank")
 	private String role;
 	private List<String> access;
 }

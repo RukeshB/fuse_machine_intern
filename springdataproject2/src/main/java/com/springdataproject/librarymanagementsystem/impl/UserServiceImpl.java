@@ -50,7 +50,8 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public UserDto getuserByID(String id) {
-		User user = userRepo.findById(id).orElseThrow(IllegalStateException::new);
+		User user = userRepo.findById(id)
+				.orElseThrow(()->new IllegalStateException("User data not Found"));
 		List<RoleDto> roleDtoList = new ArrayList<>();
 		
 			for(String roleid:user.getRoleID())
@@ -89,7 +90,8 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public UserDto updateuser(String id, UserDto user) {
-		User userModel = userRepo.findById(id).orElseThrow(IllegalStateException::new);
+		User userModel = userRepo.findById(id)
+				.orElseThrow(()->new IllegalStateException("User data not Found"));
 		List<String> roleIdList = new ArrayList<>();
 		for(String roleID:user.getRoleID())
 		{

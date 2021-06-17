@@ -2,6 +2,8 @@ package com.springdataproject.librarymanagementsystem.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,13 +45,13 @@ public class BookController {
 	}
 	
 	@PostMapping
-	public BookDto addbook(@RequestBody BookDto book)
+	public BookDto addbook(@Valid @RequestBody BookDto book)
 	{
 		return service.addbook(book);
 	}
 	
 	@PutMapping("/{id}")
-	public BookDto updatebook(@PathVariable String id,@RequestBody BookDto book) throws Exception
+	public BookDto updatebook(@PathVariable String id,@Valid @RequestBody BookDto book) throws Exception
 	{
 		return service.updatebook(id, book);
 	}

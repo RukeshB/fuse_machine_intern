@@ -38,7 +38,8 @@ public class AuthorServiceImpl implements AuthorService{
 
 	@Override
 	public AuthorDto getAuthorByID(String id)  {
-		Author author = authorRepo.findById(id).orElseThrow(IllegalStateException::new);
+		Author author = authorRepo.findById(id)
+				.orElseThrow(()->new IllegalStateException("Author data not Found"));
 //						.orElseThrow(() -> new Exception
 //								("author with id: "+id+" not found")
 //								);
@@ -67,7 +68,8 @@ public class AuthorServiceImpl implements AuthorService{
 
 	@Override
 	public AuthorDto updateAuthor(String id, AuthorDto author) {
-		Author authorModel = authorRepo.findById(id).orElseThrow(IllegalStateException::new);
+		Author authorModel = authorRepo.findById(id)
+				.orElseThrow(()->new IllegalStateException("Author data not Found"));
 //				.orElseThrow(() -> new Exception
 //						("author with id: "+id+" not found")
 //						);
