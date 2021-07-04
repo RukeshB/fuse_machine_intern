@@ -11,10 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HomeController {
 	
-	@RequestMapping("/")
+	@RequestMapping("/user")
 	public String user(@AuthenticationPrincipal OAuth2User principal)
 	{
 		//return Collections.singletonMap("name", principal.getAttribute("name"));
 		return "Hello " + principal.getAttribute("name");
+	}
+	
+	@RequestMapping("/")
+	public String hello()
+	{
+		return "hello world";
 	}
 }
