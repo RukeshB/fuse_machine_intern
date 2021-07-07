@@ -3,13 +3,8 @@ package Calculator;
 import java.util.Scanner;
 
 public class Application {
-	public static void clearScreen() {  
-		System.out.print("\033[H\033[2J");  
-	    System.out.flush();  
-	}  
-	
+
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		Calculator_operation cal = new Calculator_operation();
 		
 		Scanner input = new Scanner(System.in);
@@ -76,7 +71,7 @@ public class Application {
 			{
 				System.out.println("Result = "+ result);
 			}
-			clearScreen();
+
 			input.close();
 		}
 		
