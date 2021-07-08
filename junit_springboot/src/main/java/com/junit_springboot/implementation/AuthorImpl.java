@@ -23,7 +23,8 @@ public class AuthorImpl implements AuthorService{
 
 	@Override
 	public Author getAuthorByid(String id) {
-		return repo.findById(id).get();
+		return repo.findById(id).
+				orElseThrow(()->new IllegalStateException("Author data not Found"));
 	}
 
 	@Override

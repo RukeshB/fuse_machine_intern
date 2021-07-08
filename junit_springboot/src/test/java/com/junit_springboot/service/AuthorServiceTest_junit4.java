@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -49,17 +50,17 @@ public class AuthorServiceTest_junit4 {
 	@Test
 	public void testGetAuthorById()
 	{
-//		Author author = new Author("60c1bfef224bd5ed721cd8f9","abc","abc","abc",9808797886L);
-//		when(authorRepo.findById("60c1bfef224bd5ed721cd8f9").get()).thenReturn(author);
-//		
-//		assertThrows(NoSuchElementException.class, () -> authorService.getAuthorByid("60c1bfef224bd5ed721cd8f9"));
-//		
-//		Author result = authorService.getAuthorByid("60c1bfef224bd5ed721cd8f9");
-//		assertEquals("60c1bfef224bd5ed721cd8f9", result.getId());
-//		assertEquals("xyz", result.getFirstName());
-//		assertEquals("xyz", result.getLastName());
-//		assertEquals("xyz", result.getAddress());
-//		assertEquals(9808798887L, result.getPhone());
+		Author author = new Author("60c1bfef224bd5ed721cd8f9","xyz","xyz","xyz",9808798887L);
+		when(authorRepo.findById("60c1bfef224bd5ed721cd8f9")).thenReturn(Optional.of(author));
+		
+		//assertThrows(NoSuchElementException.class, () -> authorService.getAuthorByid("60c1bfef224bd5ed721cd8f9"));
+		
+		Author result = authorService.getAuthorByid("60c1bfef224bd5ed721cd8f9");
+		assertEquals("60c1bfef224bd5ed721cd8f9", result.getId());
+		assertEquals("xyz", result.getFirstName());
+		assertEquals("xyz", result.getLastName());
+		assertEquals("xyz", result.getAddress());
+		assertEquals(9808798887L, result.getPhone());
 	}
 	
 	@Test
