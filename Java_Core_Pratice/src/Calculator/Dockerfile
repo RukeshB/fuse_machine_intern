@@ -1,6 +1,6 @@
 FROM openjdk:7
 COPY . /fusemachine/basic
 WORKDIR /fusemachine/basic
-RUN javac Calculator_operation.java
-RUN javac Application.java
+RUN javac *.java
+RUN java Application
 CMD ["java","Application"]
