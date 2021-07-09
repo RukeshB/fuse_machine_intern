@@ -56,11 +56,7 @@ public class AuthorServiceTest_junit4 {
 		//assertThrows(NoSuchElementException.class, () -> authorService.getAuthorByid("60c1bfef224bd5ed721cd8f9"));
 		
 		Author result = authorService.getAuthorByid("60c1bfef224bd5ed721cd8f9");
-		assertEquals("60c1bfef224bd5ed721cd8f9", result.getId());
-		assertEquals("xyz", result.getFirstName());
-		assertEquals("xyz", result.getLastName());
-		assertEquals("xyz", result.getAddress());
-		assertEquals(9808798887L, result.getPhone());
+		assertEquals(author, result);
 	}
 	
 	@Test
@@ -70,10 +66,6 @@ public class AuthorServiceTest_junit4 {
 		when(authorRepo.insert(author)).thenReturn(author);
 		
 		Author result = authorService.addAuthor(author);
-		assertEquals("aaa", result.getId());
-		assertEquals("aaa", result.getFirstName());
-		assertEquals("aaa", result.getLastName());
-		assertEquals("aaa", result.getAddress());
-		assertEquals(9808798886L, result.getPhone());
+		assertEquals(author, result);
 	}
 }
